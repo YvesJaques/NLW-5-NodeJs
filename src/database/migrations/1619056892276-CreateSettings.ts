@@ -10,17 +10,16 @@ export class CreateSettings1619056892276 implements MigrationInterface {
                     {
                         name: "id",
                         type: "uuid",
-                        isPrimary: true,
-                        isUnique: true
+                        isPrimary: true                  
                     },
                     {
                         name: "username",
-                        type: "varchar",
+                        type: "varchar"
                     },
                     {
                         name: "chat",
                         type: "boolean",
-                        default: true,
+                        default: true
                     },
                     {
                         name: "updated_at",
