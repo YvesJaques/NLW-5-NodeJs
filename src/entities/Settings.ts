@@ -5,7 +5,7 @@ import {v4 as uuid} from "uuid";
 @Entity("settings")
 class Setting {
     
-    @PrimaryColumn({name: "id"})
+    @PrimaryColumn()
     id: string;
 
     @Column()
