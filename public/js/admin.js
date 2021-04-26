@@ -1,4 +1,4 @@
-//const { text } = require("express");
+//import { text } from "express";
 
 const socket = io();
 let connectionsUsers = [];
@@ -19,8 +19,7 @@ socket.on("admin_list_all_users", (connections) => {
   });
 });
 
-function call(id) {
-  
+function call(id) {  
   const connection = connectionsUsers.find(
     (connection) => connection.socket_id === id
   );
@@ -35,10 +34,12 @@ function call(id) {
   document.getElementById("supports").innerHTML += rendered;
 
   const params = {
-    user_id: connection.user_id
-  }
+    user_id: connection.user_id,
+  };
 
-  socket.emit("admin_list_messages_by_user", params, messages => {
+  socket.emit("admin_user_in_support", params);
+
+  socket.emit("admin_list_messages_by_user", params, (messages) => {
     const divMessages = document.getElementById(`allMessages${connection.user_id}`);
 
     messages.forEach((message) => {
@@ -82,8 +83,7 @@ function sendMessage(id) {
 
   const createDiv = document.createElement("div");
   createDiv.className = "admin_message_admin";
-
-  createDiv.innerHTML = `Atendente <span>${params.text}</span>`;        
+  createDiv.innerHTML = `Atendente: <span>${params.text}</span>`;        
   createDiv.innerHTML += `<span class="admin_date">${dayjs().format(
     "DD/MM/YYYY HH:mm:ss"
   )}`;    
@@ -94,9 +94,13 @@ function sendMessage(id) {
 }
 
 socket.on("admin_receive_message", (data) => {
-  const connection = connectionsUsers.find(connection => connection.socket_id = data.socket_id);
-
-  const divMessages = document.getElementById(`allMessages${connection.user_id}`);
+  const connection = connectionsUsers.find(
+    (connection) => (connection.socket_id = data.socket_id)
+  );  
+  
+  const divMessages = document.getElementById(
+    `allMessages${connection.user_id}`
+  );
 
   const createDiv = document.createElement("div");
   createDiv.className = "admin_message_client";
